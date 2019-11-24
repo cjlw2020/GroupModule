@@ -8,32 +8,32 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# download packages "lidR" and "raster"
+#Import LIDAR data
+##Download packages "lidR" and "raster"
 ```{r}
 library(lidR)
 library(raster)
 ```
-
-Get raw LIDER data into R
+##Get raw LIDER data into R
 ```{r}
 setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Lab4_data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015")
 las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
 plot(las)
 ```
-Transistion LIDER data to DEM
+#Transistion LIDER data to DEM
 ```{r}
 dtm2 <-  grid_terrain(las, algorithm = tin())
 plot(dtm2)
 raster::plot(dtm2, col = height.colors(50)) #just different colors
 las2 <- lasnormalize(las, dtm2) #don't know if this does anything
 ```
-Set new Working directory untill true DSM is created. Get a Processed DSM file into R
+##Set new Working directory untill true DSM is created. Get a ##Processed DSM file into R
 ```{r}
 setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Outputs_fromLab4")
 dsm <- raster("bu_dsm.tif")
 plot(dsm)
 ```
-Create a hillshade from DSM
+#Create a hillshade from DSM
 ```{r}
 slope  <- terrain(dsm, opt='slope')
 aspect <- terrain(dsm, opt='aspect')
