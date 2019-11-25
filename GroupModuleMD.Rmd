@@ -45,9 +45,10 @@ plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
 #Import Building shp files (requiors path)
 ```{r}
+setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Lab4_data/Building_structures_bu")
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_builidings <- ggplot() + 
-  geom_sf(data = BU_buildings_shp, size = 3, color = "cyan1", fill = "cyan1") + 
+  geom_sf(data = BU_buildings_shp, size = 3, color = "black", fill = "cyan1") + 
   ggtitle("BU Buildings") + 
   coord_sf()
 plot(BU_builidings)
