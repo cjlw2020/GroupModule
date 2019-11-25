@@ -15,6 +15,9 @@ library(lidR)
 library(raster)
 library(sf)
 library(ggplot2)
+library(rgeos)
+library(mapview)
+library(leaflet)
 ```
 ##Get raw LIDER data into R
 ```{r}
@@ -48,9 +51,19 @@ plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
 setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Lab4_data/Building_structures_bu")
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_builidings <- ggplot() + 
-  geom_sf(data = BU_buildings_shp, size = 3, color = "black", fill = "cyan1") + 
+  geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
   ggtitle("BU Buildings") + 
   coord_sf()
 plot(BU_builidings)
 ```
+#Plot Vector File on Raster #Something went wrong here
+```{r}
+plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
+plot(BU_builidings,
+     add = TRUE)
+plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
+
+```
+
+
 
