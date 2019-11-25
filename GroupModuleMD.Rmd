@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(lidR)
 library(raster)
+library(sf)
+library(ggplot2)
 ```
 ##Get raw LIDER data into R
 ```{r}
@@ -37,8 +39,17 @@ plot(dsm)
 ```{r}
 slope  <- terrain(dsm, opt='slope')
 aspect <- terrain(dsm, opt='aspect')
-hill   <- hillShade(slope, aspect, 40, 270)
+hill   <- hillShade(slope, aspect, 45, 120)
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
+```
+#Import Building shp files (requiors path)
+```{r}
+BU_buildings_shp <- st_read("building_structures_bu.shp")
+BU_builidings <- ggplot() + 
+  geom_sf(data = BU_buildings_shp, size = 3, color = "cyan1", fill = "cyan1") + 
+  ggtitle("BU Buildings") + 
+  coord_sf()
+plot(BU_builidings)
 ```
 
