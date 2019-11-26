@@ -67,3 +67,5 @@ plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_builidings,
      add = TRUE)
 plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
+```
+
