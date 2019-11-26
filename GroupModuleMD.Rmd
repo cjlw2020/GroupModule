@@ -2,7 +2,9 @@
 title: "GroupModule"
 author: "cjlw2020"
 date: "11/22/2019"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -17,11 +19,10 @@ library(sf)
 library(ggplot2)
 library(rgeos)
 library(mapview)
-library(leaflet)
 ```
 ##Get raw LIDER data into R
 ```{r}
-setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Lab4_data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015")
+setwd("C:/Users/clint/Desktop/Stuff")
 las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
 plot(las)
 ```
@@ -32,9 +33,14 @@ plot(dtm2)
 raster::plot(dtm2, col = height.colors(50)) #just different colors
 las2 <- lasnormalize(las, dtm2) #don't know if this does anything
 ```
-##Set new Working directory untill true DSM is created. Get a ##Processed DSM file into R
+#Convert to DSM
 ```{r}
-setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Outputs_fromLab4")
+dsm1 <- grid_canopy(las, res = 1, dsmtin())
+col <- height.colors(100)
+plot(dsm1, col = col)
+```
+#Get a processed DSM file into R
+```{r}
 dsm <- raster("bu_dsm.tif")
 plot(dsm)
 ```
@@ -48,7 +54,6 @@ plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
 #Import Building shp files (requiors path)
 ```{r}
-setwd("C:/Users/clint/Desktop/AN597_Project/Group/Lab4Data/Lab4_data/Building_structures_bu")
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_builidings <- ggplot() + 
   geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
@@ -56,14 +61,9 @@ BU_builidings <- ggplot() +
   coord_sf()
 plot(BU_builidings)
 ```
-#Plot Vector File on Raster #Something went wrong here
+#Plot Vector File on Raster #Not alligned
 ```{r}
 plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_builidings,
      add = TRUE)
 plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
-
-```
-
-
-
