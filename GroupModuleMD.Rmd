@@ -7,53 +7,72 @@ output:
   html_document: default
 ---
 
+```{r}
+#section here introducing what lidar is & how to download the data
+#info & data download here:
+#https://sites.google.com/bu.edu/ge505/lab-4-lidar?authuser=0
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 #Import LIDAR data
 ##Download packages "lidR" and "raster"
 ```{r}
-library(lidR)
-library(raster)
-library(sf)
-library(ggplot2)
-library(rgeos)
-library(mapview)
+#install.packages("lidR")
+library(lidR) #this one for sure
+#library(raster)
+#library(sf)
+#library(ggplot2)
+#ibrary(rgeos)
+#library(mapview)
 ```
-##Get raw LIDER data into R
+##Get raw LIDAR data into R
 ```{r}
-setwd("C:/Users/clint/Desktop/Stuff")
-las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
-plot(las)
+#setwd("C:/Users/clint/Desktop/Stuff")
+#las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+#nk: 
+las <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+plot(las) #first look
 ```
-#Transistion LIDER data to DEM
+#Transition LIDAR data to DEM
 ```{r}
-dtm2 <-  grid_terrain(las, algorithm = tin())
-plot(dtm2)
-raster::plot(dtm2, col = height.colors(50)) #just different colors
-las2 <- lasnormalize(las, dtm2) #don't know if this does anything
+#let's explain what dem is 
+dem <-  grid_terrain(las, algorithm = tin())
+plot(dem)
+#raster::plot(dtm2, col = height.colors(50)) #just different colors
+#las2 <- lasnormalize(las, dtm2) #don't know if this does anything
 ```
 #Convert to DSM
 ```{r}
 dsm1 <- grid_canopy(las, res = 1, dsmtin())
-col <- height.colors(100)
+col <- height.colors(100) #how many colors to use, the more colors the better resolution in the plot
 plot(dsm1, col = col)
+crs(dsm1) <- "+proj=utm" 
+slope  <- terrain(dsm1, opt='slope')
+aspect <- terrain(dsm1, opt='aspect')
+hill   <- hillShade(slope, aspect, 45, 120)
+plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
+plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
+
 ```
 #Get a processed DSM file into R
-```{r}
+```{r eval=FALSE}
 dsm <- raster("bu_dsm.tif")
 plot(dsm)
 ```
 #Create a hillshade from DSM
-```{r}
+```{r eval=FALSE}
 slope  <- terrain(dsm, opt='slope')
 aspect <- terrain(dsm, opt='aspect')
-hill   <- hillShade(slope, aspect, 45, 120)
+hill <- hillShade(slope, aspect, 45, 120)
+quartz()
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
-plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
+plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
 #Import Building shp files (requiors path)
-```{r}
+```{r eval = FALSE}
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_builidings <- ggplot() + 
   geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
@@ -62,7 +81,7 @@ BU_builidings <- ggplot() +
 plot(BU_builidings)
 ```
 #Plot Vector File on Raster #Not alligned
-```{r}
+```{r eval = FALSE}
 plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_builidings,
      add = TRUE)
