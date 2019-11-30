@@ -45,20 +45,20 @@ plot(las) #first look
 dem <-  grid_terrain(las, algorithm = tin())
 plot(dem)
 ```
-#Convert to DSM
+#Convert to DSM + create hillshade model
 ```{r}
+proj4string(las) <-CRS("+proj=utm +zone=19 +datum=NAD83") #assigning coord ref system
 dsm1 <- grid_canopy(las, res = 1, dsmtin())
 col <- height.colors(100) #how many colors to use, the more colors the better resolution in the plot
 plot(dsm1, col = col)
-crs(dsm1) <- "+proj=utm" #assigning coordinate ref system
 slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
-hill   <- hillShade(slope, aspect, 45, 120)
+hill <- hillShade(slope, aspect, 45, 120)
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE)
 ```
 
-#Import Building shp files (requires path)
+#Nice building shp file plot
 ```{r eval = FALSE}
 BU_buildings_shp <- st_read("~/Downloads/Lab4_Data/Building_structures_bu/building_structures_bu.shp")
 BU_buildings <- ggplot() + 
@@ -68,15 +68,24 @@ BU_buildings <- ggplot() +
 plot(BU_buildings)
 ```
 
-#Plot Vector File on Raster #Not aligned
+#Plot Building Vector File on Raster
 ```{r eval = FALSE}
-plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
-plot(BU_buildings,
-     add = TRUE)
-plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
+dsm2 <- projectRaster(dsm1, crs = crs(BU_buildings_shp[2]))
+dsm3 <- crop(dsm2, BU_buildings_shp[2]) #there are 16 different options instead of "2" here, not sure which one we want
+
+hill2 <- projectRaster(hill, crs = crs(BU_buildings_shp[2]))
+hill3 <- crop(hill2, BU_buildings_shp[2]) #there are 16 different options instead of "2" here, not sure which one we want
+
+#aligned plot, still has extra region in the buildings that part we don't need:
+plot(hill3, col=grey(0:100/100), legend=FALSE, main ='Boston University')
+plot(BU_buildings_shp[2],add=TRUE)
+plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE)
 ```
 
-#Outdated stuff
+
+
+
+#Outdated script
 #Get a processed DSM file into R
 ```{r eval=FALSE}
 dsm <- raster("bu_dsm.tif")
@@ -91,5 +100,13 @@ quartz()
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
+#unaligned raster + vector file
+```{r}
+plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
+plot(BU_buildings,
+     add = TRUE)
+plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
+```
+
 
 
