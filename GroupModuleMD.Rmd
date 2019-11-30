@@ -17,17 +17,19 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 #Import LIDAR data
 ##Download packages "lidR" and "raster"
 ```{r}
 #install.packages("lidR")
 library(lidR) #this one for sure
+library(sf)
+library(ggplot2)
 #library(raster)
-#library(sf)
-#library(ggplot2)
 #ibrary(rgeos)
 #library(mapview)
 ```
+
 ##Get raw LIDAR data into R
 ```{r}
 #setwd("C:/Users/clint/Desktop/Stuff")
@@ -36,27 +38,45 @@ library(lidR) #this one for sure
 las <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
 plot(las) #first look
 ```
+
 #Transition LIDAR data to DEM
 ```{r}
 #let's explain what dem is 
 dem <-  grid_terrain(las, algorithm = tin())
 plot(dem)
-#raster::plot(dtm2, col = height.colors(50)) #just different colors
-#las2 <- lasnormalize(las, dtm2) #don't know if this does anything
 ```
 #Convert to DSM
 ```{r}
 dsm1 <- grid_canopy(las, res = 1, dsmtin())
 col <- height.colors(100) #how many colors to use, the more colors the better resolution in the plot
 plot(dsm1, col = col)
-crs(dsm1) <- "+proj=utm" 
+crs(dsm1) <- "+proj=utm" #assigning coordinate ref system
 slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
 hill   <- hillShade(slope, aspect, 45, 120)
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
-plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
-
+plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE)
 ```
+
+#Import Building shp files (requires path)
+```{r eval = FALSE}
+BU_buildings_shp <- st_read("~/Downloads/Lab4_Data/Building_structures_bu/building_structures_bu.shp")
+BU_buildings <- ggplot() + 
+  geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
+  ggtitle("BU Buildings") + 
+  coord_sf()
+plot(BU_buildings)
+```
+
+#Plot Vector File on Raster #Not aligned
+```{r eval = FALSE}
+plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
+plot(BU_buildings,
+     add = TRUE)
+plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
+```
+
+#Outdated stuff
 #Get a processed DSM file into R
 ```{r eval=FALSE}
 dsm <- raster("bu_dsm.tif")
@@ -71,20 +91,5 @@ quartz()
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
-#Import Building shp files (requiors path)
-```{r eval = FALSE}
-BU_buildings_shp <- st_read("building_structures_bu.shp")
-BU_builidings <- ggplot() + 
-  geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
-  ggtitle("BU Buildings") + 
-  coord_sf()
-plot(BU_builidings)
-```
-#Plot Vector File on Raster #Not alligned
-```{r eval = FALSE}
-plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
-plot(BU_builidings,
-     add = TRUE)
-plot(dsm, col=rainbow(25, alpha=0.35), add=TRUE)
-```
+
 
