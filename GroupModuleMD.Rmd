@@ -116,14 +116,14 @@ plot(BU_buildings) # 5 sec
 #Plot Building Vector File on Raster
 ```{r eval = FALSE}
 #This projects the BU rooftop shape file correctly with the hillshade raster image
-dsm2 <- projectRaster(dsm1, crs = crs(BU_buildings_shp[2]))
-dsm3 <- crop(dsm2, BU_buildings_shp[2]) #there are 16 different options instead of "2" here, not sure which one we want
+dsm2 <- projectRaster(dsm1, crs = crs(BU_buildings))
+dsm3 <- crop(dsm2, BU_buildings) #there are 16 different options instead of "2" here, not sure which one we want
 
-hill2 <- projectRaster(hill, crs = crs(BU_buildings_shp[2]))
-hill3 <- crop(hill2, BU_buildings_shp[2]) #there are 16 different options instead of "2" here, not sure which one we want
+hill2 <- projectRaster(hill, crs = crs(BU_buildings))
+hill3 <- crop(hill2, BU_buildings) #there are 16 different options instead of "2" here, not sure which one we want
 
 plot(hill3, col=grey(0:100/100), legend=FALSE, main ='Boston University')
-plot(BU_buildings_shp[2],add=TRUE)
+plot(BU_buildings,add=TRUE)
 plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
 ```
 
