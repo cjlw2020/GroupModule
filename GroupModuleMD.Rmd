@@ -35,20 +35,21 @@ library(ggplot2)
 
 ##Get raw LIDAR data into R
 ```{r}
-#setwd("C:/Users/clint/Desktop/Stuff")
-#las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
-#nk: 
-las1 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
-las2 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
+setwd("C:/Users/clint/Desktop/Lab4_Data")
+las1 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+las2 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
+#nk:
+#las1 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+#las2 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
 las <- rbind(las1, las2)
-plot(las) #first look
+plot(las) #30 seconds
 ```
 
 #Transition LIDAR data to DEM
 ```{r}
 #DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points".
 dem <-  grid_terrain(las, algorithm = tin())
-plot(dem)
+plot(dem) # 1.5 min
 ```
 #Convert to DSM + create hillshade model
 ```{r}
@@ -61,17 +62,17 @@ slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
 hill <- hillShade(slope, aspect, 45, 120)
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
-plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE)
+plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 ```
 
 #Nice building shp file plot
 ```{r eval = FALSE}
-BU_buildings_shp <- st_read("~/Downloads/Lab4_Data/Building_structures_bu/building_structures_bu.shp")
+BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_buildings <- ggplot() + 
   geom_sf(data = BU_buildings_shp, size = 0.5, color = "black", fill = "cyan1") + 
   ggtitle("BU Buildings") + 
   coord_sf()
-plot(BU_buildings)
+plot(BU_buildings) # 5 sec
 ```
 
 #Plot Building Vector File on Raster
@@ -85,7 +86,7 @@ hill3 <- crop(hill2, BU_buildings_shp[2]) #there are 16 different options instea
 #aligned plot, still has extra region in the buildings that part we don't need:
 plot(hill3, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_buildings_shp[2],add=TRUE)
-plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE)
+plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
 ```
 
 
