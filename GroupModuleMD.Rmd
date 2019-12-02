@@ -13,7 +13,7 @@ output:
 #By being able to analyze landscapes using Lidar, we can answer more important/pertinent questions to current issues. One example of this is Boston's pledge to being carbon neutral by 2050. While this falls under being a civil engineering problem, its an excellent example of a different but important application of GIS, specifically Lidar uses. 
 #One way that Boston can push towards being carbon neutral would be by switching to renewable energy sources like solar, wind, and hydrologic power. The best places to utilize solar power, for example, would be places that have constant uninterrupted exposure to sunlight. Using Lidar data to map out the rooftops of Boston, we would be able to determine how much solar radiation we can obtain. You would accomplish this by mapping out the rooftops and overlaying a solar radiation layer (another built in-tool). This would in turn help to determine if there would be enough watt hours over the course of a year for it to be beneficial to begin transitioning the majority, if not all, of Boston's rooftops to being solar paneled. 
 #info & data download here:
-#https://sites.google.com/bu.edu/ge505/lab-4-lidar?authuser=0
+#https://drive.google.com/file/d/15Tdl4O4dje-7dQgGUciQpTgUza8LUo7Q/view
 ```
 
 
