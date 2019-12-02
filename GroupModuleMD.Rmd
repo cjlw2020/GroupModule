@@ -38,7 +38,9 @@ library(ggplot2)
 #setwd("C:/Users/clint/Desktop/Stuff")
 #las <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
 #nk: 
-las <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+las1 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
+las2 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
+las <- rbind(las1, las2)
 plot(las) #first look
 ```
 
