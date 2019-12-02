@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r eval=FALSE}
 #Within GIS there are multiple different tools to help you understand data that you collect about different landscapes. From previous modules you would have seen how to create maps to display your statistical analysis, or have seen how to identify different clusters and analyze significant hot and cold spots. Here we will explore how to take Lidar data files to create maps that help you analyze the landscape and interpret it to answer important questions. 
 #Lidar stands for Light Detection and Ranging. It is a surveying/remote sensing method that measures distance to a target. It does this by illuminating the target with laser light and measuring the reflected light with a sensor. Differences in laser return times and wavelengths can then be used to make digital 3-D representations. It is commonly used to make high-resolution maps, with applications in fields such as archaeology, geography, and laser guidance. 
 #By being able to analyze landscapes using Lidar, we can answer more important/pertinent questions to current issues. One example of this is Boston's pledge to being carbon neutral by 2050. While this falls under being a civil engineering problem, its an excellent example of a different but important application of GIS, specifically Lidar uses. 
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Import LIDAR data
 ##Download packages "lidR" and "raster"
-```{r}
+```{r eval=FALSE}
 #install.packages("lidR")
 library(lidR) #this one for sure
 library(sf)
@@ -51,8 +51,20 @@ library(ggplot2)
 ```
 
 #Get Raw LIDAR data into R
-#Elaborate LIDAR* Elaborate lidR* Elaborate Combinging Data
-```{r}
+The way LIDAR works is by emitting laser pulses to reflect from objects both on and above the ground surface: vegetation, buildings, bridges, and so on. One emitted laser pulse can return to the lidar sensor as one or many returns. Any emitted laser pulse that encounters multiple reflection surfaces as it travels toward the ground is split into as many returns as there are reflective surfaces.
+
+- The first returned laser pulse is the most significant return and will be associated with the highest feature in the landscape like a treetop or the top of a building. The first return can also represent the ground, in which case only one return will be detected by the lidar system.
+
+- Multiple returns are capable of detecting the elevations of several objects within the laser footprint of an outgoing laser pulse. The intermediate returns, in general, are used for vegetation structure, and the last return for bare-earth terrain models.
+
+- The last return will not always be from a ground return. For example, consider a case where a pulse hits a thick branch on its way to the ground and the pulse does not actually reach the ground. In this case, the last return is not from the ground but from the branch that reflected the entire laser pulse. 
+
+<br><center>
+<img src="img/LIDAR_returns_graphic.png" style="border:3px solid black" width="500px"/>
+</center><br>
+
+#Elaborate lidR* Elaborate Combining Data
+```{r eval=FALSE}
 setwd("C:/Users/clint/Desktop/Lab4_Data")
 las1 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
 las2 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
@@ -66,7 +78,7 @@ plot(las) #30 seconds
 ```
 #Transition LIDAR data to DEM
 #Elaborate DEM (What, why)
-```{r}
+```{r eval=FALSE}
 #DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points".
 dem <-  grid_terrain(las, algorithm = tin())
 plot(dem) # 1.5 min
@@ -74,7 +86,7 @@ plot(dem) # 1.5 min
 #Convert to DSM + create hillshade model
 #Elaborate DSM (What why)* Elaborate Differnece Between DSM and DEM*
 #Elaborate Hillshade. What is it? How is is made?*
-```{r}
+```{r eval=FALSE}
 #DSM stands for Digital Surface Model. Unlike the DEM, the DSM DOES include man-made/built and natural points of reference into its representation. 
 proj4string(las) <-CRS("+proj=utm +zone=19 +datum=NAD83") #assigning coord ref system
 dsm1 <- grid_canopy(las, res = 1, dsmtin())
@@ -82,7 +94,7 @@ col <- height.colors(100) #how many colors to use, the more colors the better re
 plot(dsm1, col = col)
 ```
 #Elaborate Hillshade. What is it? How is is made?*
-```{r}
+```{r eval=FALSE}
 slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
 hill <- hillShade(slope, aspect, 45, 120)
@@ -134,7 +146,7 @@ plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm1, col=rainbow(25, alpha=0.35), add=TRUE)
 ```
 #unaligned raster + vector file
-```{r}
+```{r eval=FALSE}
 plot(hill, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_buildings,
      add = TRUE)
