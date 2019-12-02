@@ -1,27 +1,15 @@
 ---
-date: "11/22/2019"
 title: "Group Module"
-author: Clint Lockwood, 
-output: 
+author: "Clint Lockwood,"
+date: "11/22/2019"
+output:
   html_document:
     theme: cosmo
-    toc: true
-    toc_float: true
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
 ---
-
-***
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-	echo = TRUE,
-	warning = FALSE,
-	comment = "##",
-	prompt = FALSE,
-	tidy = TRUE,
-	tidy.opts = list(width.cutoff = 75),
-	fig.path = "img/"
-)
-```
 
 Within GIS there are multiple different tools to help you understand data that you collect about different landscapes. From previous modules you would have seen how to create maps to display your statistical analysis, or have seen how to identify different clusters and analyze significant hot and cold spots. Here we will explore how to take Lidar data files to create maps that help you analyze the landscape and interpret it to answer important questions. 
 Lidar stands for Light Detection and Ranging. It is a surveying/remote sensing method that measures distance to a target. It does this by illuminating the target with laser light and measuring the reflected light with a sensor. Differences in laser return times and wavelengths can then be used to make digital 3-D representations. It is commonly used to make high-resolution maps, with applications in fields such as archaeology, geography, and laser guidance. 
