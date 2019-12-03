@@ -110,7 +110,7 @@ plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 
 #Add Boston Univeristy rooftop shapefile
 
-A shapefile isa a format is a geospatial vector data format for geographic information system software. 
+A shapefile is a geospatial vector data format for geographic information system software. 
 
 ```{r eval = FALSE}
 BU_buildings_shp <- st_read("building_structures_bu.shp")
@@ -143,7 +143,7 @@ Lidar data can be downloaded at this [USGS site](https://viewer.nationalmap.gov/
 
 ![](AN597 Pics/alllidar.png)
 
-I downloaded the data from the tiles where "Boston Common" & "Arnold Arboretum" were located. Boston Common was split across two tiles so I downloaded two & combine them below:
+We downloaded the data from the tiles where "Boston Common" & "Arnold Arboretum" were located. Boston Common was split across two tiles so I downloaded two & combine them below:
 
 ```{r eval = FALSE}
 #reading in the las data
