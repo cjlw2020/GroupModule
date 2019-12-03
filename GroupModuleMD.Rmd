@@ -11,6 +11,7 @@ output:
     toc: yes
 ---
 
+
 # Part I. Intro to Lidar
 
 Within GIS there are multiple different tools to help you understand data that you collect about different landscapes. From previous modules you would have seen how to create maps to display your statistical analysis, or have seen how to identify different clusters and analyze significant hot and cold spots. Here we will explore how to take Lidar data files to create maps that help you analyze the landscape and interpret it to answer important questions. 
@@ -68,6 +69,8 @@ dem <-  grid_terrain(las, algorithm = tin())
 plot(dem) # 1.5 min
 ```
 
+![](AN597 Pics/DEM.png)
+
 ## Convert to DSM + create hillshade model
 
 ### What is DSM? Why do we need it?
@@ -90,6 +93,8 @@ plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
 plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 ```
 
+![](AN597 Pics/Hillshade2.0.png)
+
 #Add Boston Univeristy rooftop shapefile
 #Elaborate shapefile description*
 ```{r eval = FALSE}
@@ -100,6 +105,8 @@ BU_buildings <- ggplot() +
   coord_sf()
 plot(BU_buildings) # 5 sec
 ```
+
+![](AN597 Pics/BU rooftop shapes.png)
 
 #Plot Building Vector File on Raster
 ```{r eval = FALSE}
@@ -114,6 +121,8 @@ plot(hill3, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_buildings,add=TRUE)
 plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
 ```
+
+![](AN597 Pics/Boston university (shape on DSM).png)
 
 # Part II. How do Boston Common & Arnold Arboretum canopy heights differ?
 
