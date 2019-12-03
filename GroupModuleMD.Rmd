@@ -86,7 +86,10 @@ dsm1 <- grid_canopy(las, res = 1, dsmtin())
 col <- height.colors(100) #how many colors to use, the more colors the better resolution in the plot
 plot(dsm1, col = col)
 ```
-#Elaborate Hillshade. What is it? How is is made?*
+
+![](AN597 Pics/DSM.png)
+
+#Elaborate Hillshade. What is it? How is is made?
 ```{r eval=FALSE}
 slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
