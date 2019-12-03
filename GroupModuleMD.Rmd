@@ -85,9 +85,6 @@ plot(dem) # 1.5 min
 
 DSM stands for Digital Surface Model. Unlike the DEM, the DSM DOES include man-made/built and natural points of reference into its representation. Another way to think of it is an image including the first return information. We need DSM....
 
-### What is hillshade? Why do we need it? How is it made?
-
-A hillshade is a grayscale 3D representation of the surface, with the sun's relative position taken into account for shading the image. This function uses the altitude and azimuth properties to specify the sun's position.Used as a background, hillshades provide a relief over which you can draw raster data or vector data. They are used as a background to provide a relief over which you can draw raster data or vector data.
 
 ```{r eval=FALSE}
 proj4string(las) <-CRS("+proj=utm +zone=19 +datum=NAD83") #assigning coord ref system
@@ -98,7 +95,10 @@ plot(dsm1, col = col)
 
 ![](AN597 Pics/DSM.png)
 
-#Elaborate Hillshade. What is it? How is is made?
+#Hillshade. What is it? How is is made?
+
+A hillshade is a grayscale 3D representation of the surface, with the sun's relative position taken into account for shading the image. This function uses the altitude and azimuth properties to specify the sun's position.Used as a background, hillshades provide a relief over which you can draw raster data or vector data. They are used as a background to provide a relief over which you can draw raster data or vector data.
+
 ```{r eval=FALSE}
 slope  <- terrain(dsm1, opt='slope')
 aspect <- terrain(dsm1, opt='aspect')
@@ -110,7 +110,9 @@ plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 ![](AN597 Pics/Hillshade2.0.png)
 
 #Add Boston Univeristy rooftop shapefile
-A shapefile is...
+
+A shapefile isa a format is a geospatial vector data format for geographic information system software. 
+
 ```{r eval = FALSE}
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_buildings <- ggplot() + 
