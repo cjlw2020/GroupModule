@@ -1,5 +1,5 @@
 ---
-title: "Lidar data in R"
+title: "LIDAR data in R"
 author: "Clint Lockwood, Nicola Kriefall, Ena Miculinic"
 date: "11/22/2019"
 output:
