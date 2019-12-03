@@ -23,11 +23,11 @@ https://drive.google.com/file/d/15Tdl4O4dje-7dQgGUciQpTgUza8LUo7Q/view
 
 
 
-## Necessicary Packages
+## Necessary Packages
 
 ```{r eval=FALSE}
 #install.packages(c("lidR","sf","ggplot2)
-library(lidR) #this one for sure
+library(lidR)
 library(sf)
 library(ggplot2)
 ```
@@ -49,11 +49,10 @@ The way LIDAR works is by emitting laser pulses to reflect from objects both on 
 ## Reading in LAS Data
 
 ```{r eval=FALSE}
-setwd("C:/Users/clint/Desktop/Lab4_Data")
-las1 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las")
-las2 <- readLAS("USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las")
+las1 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las") #change to your computer's path to the files
+las2 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las") #change to your computer's path to the files
 
-# Uses the raster package to combine raster images
+# Uses the raster package to combine raster data
 las <- rbind(las1, las2)
 plot(las) #30 seconds
 ```
@@ -137,12 +136,12 @@ Lidar data can be downloaded at this [USGS site](https://viewer.nationalmap.gov/
 
 ![](AN597 Pics/alllidar.png)
 
-I downloaded the data from the tiles where "Boston Common" & "Arnold Arboretum" were located. Boston Common was split across two tiles so I downloaded two & combine them below:
+We downloaded the data from the tiles where "Boston Common" & "Arnold Arboretum" were located. Boston Common was split across two tiles so we downloaded the two & combine them below:
 
 ```{r eval = FALSE}
-#reading in the las data
-las.bc1 <- readLAS("~/Downloads/temp/USGS_LPC_MA_Sndy_CMPG_2013_19TCG285905_LAS_2015.las")
-las.bc2 <- readLAS("~/Downloads/temp/USGS_LPC_MA_Sndy_CMPG_2013_19TCG300905_LAS_2015.las")
+#reading in the lidar data
+las.bc1 <- readLAS("~/Downloads/USGS_LPC_MA_Sndy_CMPG_2013_19TCG285905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG285905_LAS_2015.las") #change to where your files are
+las.bc2 <- readLAS("~/Downloads/USGS_LPC_MA_Sndy_CMPG_2013_19TCG300905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG300905_LAS_2015.las") #change to where your files are
 
 #taking a look - Xquartz pops up
 plot(las.bc1)
@@ -156,9 +155,6 @@ plot(las.bc)
 ![](AN597 Pics/totalbostoncommon.png)
 
 ```{r eval = FALSE}
-#assigning coordinate reference system - very important
-proj4string(las.bc) <- CRS("+proj=utm +zone=19 +datum=NAD83")
-
 #looking at the canopy height model
 chm.bc <- grid_canopy(las.bc, res = 1, dsmtin())
 plot(chm.bc)
@@ -166,7 +162,7 @@ plot(chm.bc)
 
 ![](AN597 Pics/chm.bc.png)
 
-Now I'm going to clip the giant LAS file down to an area of interest within Boston Common with no trees, using the x, y coordinates seen in the canopy height model above.
+Now we're going to clip the giant LAS file down to an area of interest within Boston Common with no trees, using the x, y coordinates seen in the canopy height model above.
 
 ```{r eval = FALSE}
 las.bc.clipped <- lasclipRectangle(las.bc, 329500, 4690980, 329900, 4691380)
@@ -178,18 +174,17 @@ plot(las.bc.clipped) #check to see how it looks
 Now to compute the CHM for the clipped area
 
 ```{r eval = FALSE}
-dsm.bc <- grid_canopy(las.bc.clipped, res = 1, dsmtin())
-plot(dsm.bc)
-extent(dsm.bc) #400 x 400 area
+chm.bc <- grid_canopy(las.bc.clipped, res = 1, dsmtin())
+plot(chm.bc)
+extent(chm.bc) #400 x 400 area
 ```
 
-Then I repeated everything above but for a tile of the same size within Arnold Arboretum
+Then we repeated everything above but for a tile of the same size within Arnold Arboretum
 
 ```{r eval = FALSE}
 las.aa <- readLAS("~/Downloads/temp/USGS_LPC_MA_Sndy_CMPG_2013_19TCG240845_LAS_2015.las")
 plot(las.aa)
 extent(las.aa)
-proj4string(las.aa) <- CRS("+proj=utm +zone=19 +datum=NAD83")
 
 las.aa.clipped <- lasclipRectangle(las.aa, 324650, 4684800, 325050, 4685200)
 plot(las.aa.clipped)
