@@ -12,7 +12,7 @@ output:
 ---
 
 
-# Part I. Intro to Lidar
+# Part I. Introduction to LIDAR
 
 Within GIS there are multiple different tools to help you understand data that you collect about different landscapes. From previous modules you would have seen how to create maps to display your statistical analysis, or have seen how to identify different clusters and analyze significant hot and cold spots. Here we will explore how to take Lidar data files to create maps that help you analyze the landscape and interpret it to answer important questions. 
 Lidar stands for Light Detection and Ranging. It is a surveying/remote sensing method that measures distance to a target. It does this by illuminating the target with laser light and measuring the reflected light with a sensor. Differences in laser return times and wavelengths can then be used to make digital 3-D representations. It is commonly used to make high-resolution maps, with applications in fields such as archaeology, geography, and laser guidance. 
@@ -21,9 +21,9 @@ One way that Boston can push towards being carbon neutral would be by switching 
 info & data download here:
 https://drive.google.com/file/d/15Tdl4O4dje-7dQgGUciQpTgUza8LUo7Q/view
 
-## Import LIDAR data
 
-Download packages
+
+## Necessicary Packages
 
 ```{r eval=FALSE}
 #install.packages(c("lidR","sf","ggplot2)
@@ -32,7 +32,7 @@ library(sf)
 library(ggplot2)
 ```
 
-## Get Raw LIDAR data into R
+## Import LIDAR Data
 
 The way LIDAR works is by emitting laser pulses to reflect from objects both on and above the ground surface: vegetation, buildings, bridges, etc. Any emitted laser pulse that encounters multiple reflection surfaces as it travels toward the ground is split into as many returns as there are reflective surfaces.
 
@@ -65,6 +65,8 @@ plot(las) #30 seconds
 ### What is DEM? Why do we need it?*
 
 DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points". Another way to think of it is an image containing only the topography from the ground 
+
+![](AN597 Pics/D)
 
 ```{r eval=FALSE}
 dem <-  grid_terrain(las, algorithm = tin())
