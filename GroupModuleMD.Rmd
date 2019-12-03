@@ -66,7 +66,7 @@ plot(las) #30 seconds
 
 DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points". Another way to think of it is an image containing only the topography from the ground 
 
-![](AN597 Pics/D)
+![](AN597 Pics/Difference Between DSM DEM.png)
 
 ```{r eval=FALSE}
 dem <-  grid_terrain(las, algorithm = tin())
