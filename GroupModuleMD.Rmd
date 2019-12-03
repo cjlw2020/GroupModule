@@ -169,7 +169,7 @@ plot(chm.bc)
 
 ![](AN597 Pics/chm.bc.png)
 
-Now I'm going to clip the giant LAS file down to an area of interest within Boston Common with no trees, using the x, y coordinates seen in the canopy height model above.
+Now we're going to clip the giant LAS file down to an area of interest within Boston Common with no trees, using the x, y coordinates seen in the canopy height model above.
 
 ```{r eval = FALSE}
 las.bc.clipped <- lasclipRectangle(las.bc, 329500, 4690980, 329900, 4691380)
@@ -186,7 +186,7 @@ plot(dsm.bc)
 extent(dsm.bc) #400 x 400 area
 ```
 
-Then I repeated everything above but for a tile of the same size within Arnold Arboretum
+Then we repeated everything above but for a tile of the same size within Arnold Arboretum
 
 ```{r eval = FALSE}
 las.aa <- readLAS("~/Downloads/temp/USGS_LPC_MA_Sndy_CMPG_2013_19TCG240845_LAS_2015.las")
