@@ -42,7 +42,7 @@ The way LIDAR works is by emitting laser pulses to reflect from objects both on 
 - The last return will not always be from a ground return. For example, consider a case where a pulse hits a thick branch on its way to the ground and the pulse does not actually reach the ground. In this case, the last return is not from the ground but from the branch that reflected the entire laser pulse. 
 
 <br><center>
-<img src="img/LIDAR_returns_graphic.png" style="border:3px solid black" width="500px"/>
+<img src="AN597 Pics/LIDAR_returns_graphic.png" style="border:3px solid black" width="500px"/>
 </center><br>
 
 ##lidR package function**
