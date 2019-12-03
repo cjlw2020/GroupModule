@@ -34,9 +34,11 @@ https://drive.google.com/file/d/15Tdl4O4dje-7dQgGUciQpTgUza8LUo7Q/view
 
 ```{r eval=FALSE}
 #install.packages(c("lidR","sf","ggplot2)
+install.packages("googledrive")
 library(lidR)
 library(sf)
 library(ggplot2)
+library(googledrive)
 ```
 
 ## Import LIDAR Data
