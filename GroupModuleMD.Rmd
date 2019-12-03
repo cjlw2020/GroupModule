@@ -15,9 +15,13 @@ output:
 # Part I. Introduction to LIDAR
 
 Within GIS there are multiple different tools to help you understand data that you collect about different landscapes. From previous modules you would have seen how to create maps to display your statistical analysis, or have seen how to identify different clusters and analyze significant hot and cold spots. Here we will explore how to take Lidar data files to create maps that help you analyze the landscape and interpret it to answer important questions. 
+
 Lidar stands for Light Detection and Ranging. It is a surveying/remote sensing method that measures distance to a target. It does this by illuminating the target with laser light and measuring the reflected light with a sensor. Differences in laser return times and wavelengths can then be used to make digital 3-D representations. It is commonly used to make high-resolution maps, with applications in fields such as archaeology, geography, and laser guidance. 
+
 By being able to analyze landscapes using Lidar, we can answer more important/pertinent questions to current issues. One example of this is Boston's pledge to being carbon neutral by 2050. While this falls under being a civil engineering problem, its an excellent example of a different but important application of GIS, specifically Lidar uses. 
+
 One way that Boston can push towards being carbon neutral would be by switching to renewable energy sources like solar, wind, and hydrologic power. The best places to utilize solar power, for example, would be places that have constant uninterrupted exposure to sunlight. Using Lidar data to map out the rooftops of Boston, we would be able to determine how much solar radiation we can obtain. You would accomplish this by mapping out the rooftops and overlaying a solar radiation layer (another built in-tool). This would in turn help to determine if there would be enough watt hours over the course of a year for it to be beneficial to begin transitioning the majority, if not all, of Boston's rooftops to being solar paneled. 
+
 info & data download here:
 https://drive.google.com/file/d/15Tdl4O4dje-7dQgGUciQpTgUza8LUo7Q/view
 
@@ -48,6 +52,8 @@ The way LIDAR works is by emitting laser pulses to reflect from objects both on 
 
 ## Reading in LAS data
 
+A LAS file is an industry-standard binary format for storing airborne lidar data. Here we are just reading the LIDAR data files in to ***R*** and assigning them to variables for later use. 
+
 ```{r eval=FALSE}
 las1 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG255905_LAS_2015.las") #change to your computer's path to the files
 las2 <- readLAS("~/Downloads/Lab4_Data/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015/USGS_LPC_MA_Sndy_CMPG_2013_19TCG270905_LAS_2015.las") #change to your computer's path to the files
@@ -57,13 +63,12 @@ las <- rbind(las1, las2)
 plot(las) #30 seconds
 ```
 
-![](AN597 Pics/LIDAR1.png)
 
 ## Transition LIDAR data to DEM*
 
 ### What is DEM? Why do we need it?*
 
-DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points". Another way to think of it is an image containing only the topography from the ground 
+DEM stands for Digital Elevation Model. This is a 3D CG representation of a terrain's surface created from a terrain's elevation data. Things like power lines, buildings and towers or trees and other vegetation aren't included in the model. It filters out what are known as "non-ground points". Another way to think of it is an image containing only the topography from the ground.
 
 ![](AN597 Pics/Difference Between DSM DEM.png)
 
@@ -78,9 +83,12 @@ plot(dem) # 1.5 min
 
 ### What is DSM? Why do we need it?
 
-DSM stands for Digital Surface Model. Unlike the DEM, the DSM DOES include man-made/built and natural points of reference into its representation. Another way to think of it is an image including the first return information.
+DSM stands for Digital Surface Model. Unlike the DEM, the DSM DOES include man-made/built and natural points of reference into its representation. Another way to think of it is an image including the first return information. We need to DSM in
 
 ### What is hillshade? Why do we need it? How is it made?
+
+Computes the intensity of illumination over a surface, such as a DEM, according to the position of the sun.
+
 ```{r eval=FALSE}
 proj4string(las) <-CRS("+proj=utm +zone=19 +datum=NAD83") #assigning coord ref system
 dsm1 <- grid_canopy(las, res = 1, dsmtin())
@@ -102,7 +110,7 @@ plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 ![](AN597 Pics/Hillshade2.0.png)
 
 #Add Boston Univeristy rooftop shapefile
-#Elaborate shapefile description*
+A shapefile is...
 ```{r eval = FALSE}
 BU_buildings_shp <- st_read("building_structures_bu.shp")
 BU_buildings <- ggplot() + 
