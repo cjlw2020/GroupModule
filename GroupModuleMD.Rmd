@@ -32,7 +32,7 @@ library(sf)
 library(ggplot2)
 ```
 
-## Import LIDAR Data
+## Importing LIDAR Data
 
 The way LIDAR works is by emitting laser pulses to reflect from objects both on and above the ground surface: vegetation, buildings, bridges, etc. Any emitted laser pulse that encounters multiple reflection surfaces as it travels toward the ground is split into as many returns as there are reflective surfaces.
 
@@ -46,7 +46,7 @@ The way LIDAR works is by emitting laser pulses to reflect from objects both on 
 <img src="AN597 Pics/LIDAR_returns_graphic.png" style="border:3px solid black" width="500px"/>
 </center><br>
 
-## Reading in LAS data
+## Reading in LAS Data
 
 ```{r eval=FALSE}
 setwd("C:/Users/clint/Desktop/Lab4_Data")
