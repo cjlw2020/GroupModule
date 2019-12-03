@@ -58,6 +58,8 @@ las <- rbind(las1, las2)
 plot(las) #30 seconds
 ```
 
+![](AN597 Pics/LIDAR1.png)
+
 ## Transition LIDAR data to DEM*
 
 ### What is DEM? Why do we need it?*
