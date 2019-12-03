@@ -95,7 +95,7 @@ plot(dsm1, col = col)
 
 ![](AN597 Pics/DSM.png)
 
-#Hillshade. What is it? How is is made?
+## Hillshade. What is it? How is it made?
 
 A hillshade is a grayscale 3D representation of the surface, with the sun's relative position taken into account for shading the image. This function uses the altitude and azimuth properties to specify the sun's position.Used as a background, hillshades provide a relief over which you can draw raster data or vector data. They are used as a background to provide a relief over which you can draw raster data or vector data.
 
@@ -109,7 +109,7 @@ plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 
 ![](AN597 Pics/Hillshade2.0.png)
 
-#Add Boston Univeristy rooftop shapefile
+## Add Boston Univeristy rooftop shapefile
 
 A shapefile is a geospatial vector data format for geographic information system software. 
 
@@ -124,7 +124,8 @@ plot(BU_buildings) # 5 sec
 
 ![](AN597 Pics/BU rooftop shapes.png)
 
-#Plot Building Vector File on Raster
+## Plot Building Vector File on Raster
+
 ```{r eval = FALSE}
 #This projects the BU rooftop shape file correctly with the hillshade raster image
 dsm2 <- projectRaster(dsm1, crs = crs(BU_buildings))
@@ -138,7 +139,7 @@ plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
 
 ![](AN597 Pics/Boston university (shape on DSM).png)
 
-# Part II. How do Boston Common & Arnold Arboretum canopy heights differ?
+# Part II. Using Lidar data - How do Boston Common & Arnold Arboretum canopy heights differ?
 
 Lidar data can be downloaded at this [USGS site](https://viewer.nationalmap.gov/basic/)
 
