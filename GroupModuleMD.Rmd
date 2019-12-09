@@ -69,8 +69,8 @@ dl1 <- drive_download(
 dl2 <- drive_download(
   as_id("1MkQqwqb2WqcWJkF8DwSRf45WQEWbF9go"), path = temp2, overwrite = TRUE)
 
-las1 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//RtmpxdwhDl/file51f47e53737d.las") #you might need to change this to the path given in the output above under 'saved locally as:'
-las2 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//RtmpxdwhDl/file51f418c35456.las")
+las1 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//Rtmpl2Ufea/file54ee4d3fa607.las") #you might need to change this to the path given in the output above under 'saved locally as:'
+las2 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//Rtmpl2Ufea/file54eedad3d30.las")
 
 las <- rbind(las1, las2)
 plot(las) #30 seconds
@@ -102,9 +102,9 @@ CHM stands for Canopy Height Model. This represents the height of objects above 
 
 ```{r eval=FALSE}
 proj4string(las) <-CRS("+proj=utm +zone=19 +datum=NAD83") #assigning coord ref system
-dsm1 <- grid_canopy(las, res = 1, dsmtin())
+chm1 <- grid_canopy(las, res = 1, dsmtin())
 col <- height.colors(100) #how many colors to use, the more colors the better resolution in the plot
-plot(dsm1, col = col)
+plot(chm1, col = col)
 ```
 
 ![](AN597 Pics/DSM.png)
@@ -114,11 +114,11 @@ plot(dsm1, col = col)
 A hillshade is a grayscale 3D representation of the surface, with the sun's relative position taken into account for shading the image. This function uses the altitude and azimuth properties to specify the sun's position.Used as a background, hillshades provide a relief over which you can draw raster data or vector data. They are used as a background to provide a relief over which you can draw raster data or vector data.
 
 ```{r eval=FALSE}
-slope  <- terrain(dsm1, opt='slope')
-aspect <- terrain(dsm1, opt='aspect')
+slope  <- terrain(chm1, opt='slope')
+aspect <- terrain(chm1, opt='aspect')
 hill <- hillShade(slope, aspect, 45, 120)
 plot(hill, col=grey(0:100/100), legend=FALSE, main='Boston University')
-plot(dsm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
+plot(chm1, col=rainbow(25, alpha=0.35),add=TRUE) # 2 min
 ```
 
 ![](AN597 Pics/Hillshade2.0.png)
@@ -142,15 +142,15 @@ plot(BU_buildings) # 5 sec
 
 ```{r eval = FALSE}
 #This projects the BU rooftop shape file correctly with the hillshade raster image
-dsm2 <- projectRaster(dsm1, crs = crs(BU_buildings_shp))
-dsm3 <- crop(dsm2, BU_buildings_shp) 
+chm2 <- projectRaster(chm1, crs = crs(BU_buildings_shp))
+chm3 <- crop(chm2, BU_buildings_shp) 
 
 hill2 <- projectRaster(hill, crs = crs(BU_buildings_shp))
 hill3 <- crop(hill2, BU_buildings_shp) 
 
 plot(hill3, col=grey(0:100/100), legend=FALSE, main ='Boston University')
 plot(BU_buildings_shp,add=TRUE)
-plot(dsm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
+plot(chm3,col=rainbow(25, alpha=0.35),add=TRUE) # 30 sec
 ```
 
 ![](AN597 Pics/Boston university (shape on DSM).png)
@@ -173,7 +173,7 @@ dl3 <- drive_download(
 dl4 <- drive_download(
   as_id("15MY5uKMYIHlPlMLWBKnKIwVAaSp4ELwf"), path = temp4, overwrite = TRUE)
 
-las.bc1 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//RtmpxdwhDl/file51f45a0f2522.las") #you might need to change this to the path given in the output above under 'saved locally as:'
+las.bc1 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//Rtmpl2Ufea/file54ee74b0f765.las") #you might need to change this to the path given in the output above under 'saved locally as:'
 las.bc2 <- readLAS("/var/folders/7g/dn_1ng7x3rvgnnf8c97vn_6h0000gp/T//RtmpxdwhDl/file51f4184f095f.las")
 
 #if downloaded right from GIS site:
